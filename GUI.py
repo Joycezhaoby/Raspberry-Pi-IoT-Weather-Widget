@@ -1,41 +1,68 @@
-from tkinter import * 			# imports the Tkinter lib
-root = Tk()				# create the root object
-root.wm_title("Weather Alert")		# sets title of the window
-root.configure(bg="#ffffff")		# change the background color 
-root.attributes("-fullscreen", True) 	# set to fullscreen
+from tkinter import *
+from tkinter import messagebox
+from configparser import ConfigParser
+import requests
 
 
-#update the text in the label_1
-def greeting():
-	label_1["text"] = "Hello, " +name.get() +"!"
+url = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
 
-# we can exit when we press the escape key
-def end_fullscreen(event):
-	root.attributes("-fullscreen", False)
-
+config_file = 'config.ini'
+config = ConfigParser()
+config.read(config_file)
+api_key = config['api_key']['key']
 
 
-name = StringVar() 			#store a string from the Entry widget input
-
-label_1 = Label(root, text="Hello, World!", font="Verdana 26 bold",
-			fg="#000",
-			bg="#99B898")
-
-label_2 = Label(root, text="What is your name?",  height=3,
-			fg="#000",
-			bg="#99B898")
-
-entry_1 = Entry(root, textvariable = name)
-
-#Add a button inside the window
-Button = Button(root, text="Submit", command = greeting)
 
 
-label_1.grid(row=0, column=0)
-label_2.grid(row=1, column=0)
-entry_1.grid(row=1, column=1) 
-Button.grid(row=2, column=1)
+app = Tk()
+app.title("Weather app")
+app.geometry('700x350')
+
+def get_weather(city):
+	result = requests.get(url.format(city, api_key))
+	if result:
+		json = result.json()
+		city = json['name']
+		country = json['sys']['country']
+		temp_kelvin = json['main']['temp']
+		temp_cel = temp_kelvin - 273.15
+		temp_fahr = (temp_kelvin - 273.15) * 9 / 5 + 32
+		icon = json['weather'][0]['icon']
+		weather = json['weather'][0]['main']
+		final = (city, country, temp_cel, temp_fahr, icon, weather)
+		return final
+	else:
+		return None
 
 
-root.bind("<Escape>", end_fullscreen)
-root.mainloop()				# starts the GUI loop
+
+def search():
+	city = city_text.get()
+	weather = get_weather(city)
+	if weather:
+		location_label['text'] = '{}, {}'.format(weather[0], weather[1])
+		image['bitmap'] = 'weather_icons/{}.png'.format(weather[4])
+		temp_label['text'] = '{:.2f}°C, {:.2f}°F'.format(weather[2], weather[3])
+		weather_label['text'] = weather[5]
+	else:
+		messagebox.showerror('Error', 'Cannot find city')
+
+city_text = StringVar()
+city_entry = Entry(app, textvariable = city_text)
+city_entry.pack()
+
+search_button = Button(app, text = 'Search Weather', width = 12, command = search)
+search_button.pack()
+
+location_label = Label(app, text = '', font = ('bold', 20))
+location_label.pack()
+
+image = Label(app, bitmap = '')
+image.pack()
+
+temp_label = Label(app, text = '')
+temp_label.pack()
+
+weather_label = Label(app, text = '')
+weather_label.pack()
+app.mainloop()
