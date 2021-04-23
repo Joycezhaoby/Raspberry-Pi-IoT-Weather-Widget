@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from configparser import ConfigParser
 import requests
-
+from PIL import ImageTk, Image
 
 url = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
 
@@ -11,11 +11,12 @@ config = ConfigParser()
 config.read(config_file)
 api_key = config['api_key']['key']
 
-
-
-
 app = Tk()
-app.title("Weather app")
+app.title("Weather GUI")
+app.config(bg="white")
+app.attributes("-fullscreen", True)
+app.bind("<F11>", lambda event: app.attributes("-fullscreen", not app.attributes("-fullscreen")))
+app.bind("<Escape>", lambda event: app.attributes("-fullscreen", False))
 app.geometry('700x350')
 
 def get_weather(city):
@@ -35,13 +36,16 @@ def get_weather(city):
 		return None
 
 
-
 def search():
+	global img
 	city = city_text.get()
 	weather = get_weather(city)
 	if weather:
 		location_label['text'] = '{}, {}'.format(weather[0], weather[1])
-		image['bitmap'] = 'weather_icons/{}.png'.format(weather[4])
+		imgpath = "weather_icons/{}.png".format(weather[4])
+		img = Image.open(imgpath)
+		img = ImageTk.PhotoImage(img)
+		imagel['image'] = img
 		temp_label['text'] = '{:.2f}°C, {:.2f}°F'.format(weather[2], weather[3])
 		weather_label['text'] = weather[5]
 	else:
@@ -49,20 +53,24 @@ def search():
 
 city_text = StringVar()
 city_entry = Entry(app, textvariable = city_text)
-city_entry.pack()
+city_entry.pack(expand=True)
 
-search_button = Button(app, text = 'Search Weather', width = 12, command = search)
+search_button = Button(app, text = 'Search Weather', width = 12, command = search,bg="white")
 search_button.pack()
 
-location_label = Label(app, text = '', font = ('bold', 20))
+location_label = Label(app, text = '', font = ('bold', 20),bg="white")
 location_label.pack()
 
-image = Label(app, bitmap = '')
-image.pack()
+img = Image.open("weather_icons/02d.png")
+#img = img.resize((150,150))
+img = ImageTk.PhotoImage(img)
 
-temp_label = Label(app, text = '')
+imagel = Label(app, image = '',bg="white")
+imagel.pack()
+
+temp_label = Label(app, text = '',bg="white")
 temp_label.pack()
 
-weather_label = Label(app, text = '')
-weather_label.pack()
+weather_label = Label(app, text = '',bg="white")
+weather_label.pack(expand=True)
 app.mainloop()
