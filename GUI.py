@@ -18,6 +18,7 @@ app = Tk()
 app.title("Weather app")
 app.geometry('700x350')
 
+
 def get_weather(city):
 	result = requests.get(url.format(city, api_key))
 	if result:
@@ -48,21 +49,34 @@ def search():
 		messagebox.showerror('Error', 'Cannot find city')
 
 city_text = StringVar()
-city_entry = Entry(app, textvariable = city_text)
-city_entry.pack()
+city_entry = Entry(app, textvariable = city_text).place(x = 250, y = 30)
 
-search_button = Button(app, text = 'Search Weather', width = 12, command = search)
-search_button.pack()
+
+Threshold = StringVar()
+Thres_entry = Entry(app, textvariable = Threshold).place(x = 250, y = 60)
+
+
+
+
+user_name = Label(app, text = "City Name").place(x = 150,y = 30) 
+user_password = Label(app, text = "Get alert when tempature is below").place(x = 35,y = 60) 
+degree = Label(app, text = "°C").place(x = 440, y = 60)
+
+
+search_button = Button(app, text = 'Search Weather', width = 10, command = search).place(x = 460, y = 30)
+
+alert_button = Button(app, text = 'set alert', width = 10, command = search).place(x = 460, y = 60)
 
 location_label = Label(app, text = '', font = ('bold', 20))
-location_label.pack()
+location_label.place(x = 275, y = 130)
+
 
 image = Label(app, bitmap = '')
-image.pack()
+image.place(x = 275, y = 160)
 
 temp_label = Label(app, text = '')
-temp_label.pack()
+temp_label.place(x = 275, y = 250)
 
 weather_label = Label(app, text = '')
-weather_label.pack()
+weather_label.place(x = 313, y = 280)
 app.mainloop()
