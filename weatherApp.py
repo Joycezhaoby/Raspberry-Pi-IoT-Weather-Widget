@@ -6,6 +6,7 @@ import requests
 
 from gpiozero import DistanceSensor
 from time import sleep
+import notification
 
 # pin16-GPIO23, pin18-GPIO24, voltage divider required for echo
 sensor = DistanceSensor(echo=23, trigger=24, max_distance=3)
@@ -17,14 +18,14 @@ def user_absent():
     global screen_on
     print("user absent")
     screen_on = 0
-    update_GUI()
+    update_GUI(False)
     #lock screen commands
 
 def user_present():
     global screen_on
     print("user present")
     screen_on = 1
-    update_GUI()
+    update_GUI(True)
     #active screen
 
 def main():
@@ -58,18 +59,21 @@ def get_weather(city):
 def change_setting():
     global city
     city = city_text.get()
-    update_GUI()
+    if city:
+        update_GUI(False)
 
-def update_GUI():
+def update_GUI(first_time):
     weather = get_weather(city)
+    #call function to check trigger condition
+    notification.notify('low temperature',weather,screen_on)
     if screen_on:
-        display_weather(weather)
+        display_weather(weather,first_time)
     else:
         lock_screen()
-    temp_label.after(60000,update_GUI)
+    temp_label.after(60000,update_GUI,False)
 
 
-def display_weather(weather):
+def display_weather(weather,first_time):
     global img
     if weather:
         location_label['text'] = '{}, {}'.format(weather[0], weather[1])
@@ -79,6 +83,9 @@ def display_weather(weather):
         imagel['image'] = img
         temp_label['text'] = '{:.2f}°C, {:.2f}°F'.format(weather[2], weather[3])
         weather_label['text'] = weather[5]
+        if first_time:
+            noti_text = 'The weather in {}, {} is {}'.format(weather[0], weather[1],weather[5])
+            notification.speak(noti_text)
     else:
         messagebox.showerror('Error', 'Cannot find city')
         change_setting()
