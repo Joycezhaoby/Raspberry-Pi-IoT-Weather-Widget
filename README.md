@@ -22,6 +22,7 @@ Pinout and connection
 written in python
 ### AWS
 description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
+### Weather API
 ### GUI Display
 description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
 
