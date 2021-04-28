@@ -114,25 +114,34 @@ app.geometry('700x350')
 city = ''
 city_text = StringVar()
 city_entry = Entry(app, textvariable = city_text)
-city_entry.pack(expand=True)
+city_entry.place(x = 250, y = 30)
 # ------------
-search_button = Button(app, text = 'Search Weather', width = 12, command = change_setting,bg="white")
-search_button.pack()
+Threshold = StringVar()
+Thres_entry = Entry(app, textvariable = Threshold).place(x = 250, y = 60)
+# ------------
+user_name = Label(app, text = "City Name").place(x = 150,y = 30) 
+user_password = Label(app, text = "Get alert when tempature is below").place(x = 35,y = 60) 
+degree = Label(app, text = "°C").place(x = 440, y = 60)
+# ------------
+search_button = Button(app, text = 'Search Weather', width = 10, command = change_setting,bg="white")
+search_button.place(x = 460, y = 30)
+# ------------
+alert_button = Button(app, text = 'set alert', width = 10, command = search).place(x = 460, y = 60)
 # ------------
 location_label = Label(app, text = '', font = ('bold', 20),bg="white")
-location_label.pack()
+location_label.place(x = 275, y = 130)
 # --------------
 img = Image.open("weather_icons/02d.png")
 #img = img.resize((150,150))
 img = ImageTk.PhotoImage(img)
 imagel = Label(app, image = '',bg="white")
-imagel.pack()
+imagel.place(x = 275, y = 160)
 # -----------------
 temp_label = Label(app, text = '',bg="white")
-temp_label.pack()
+temp_label.place(x = 275, y = 250)
 # -----------------
 weather_label = Label(app, text = '',bg="white")
-weather_label.pack(expand=True)
+weather_label.place(x = 313, y = 280)
 
 main()
 #screen_on = True
