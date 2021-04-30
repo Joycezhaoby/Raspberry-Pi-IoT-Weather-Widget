@@ -29,7 +29,7 @@ def notify(trigger_info, weather,screen_on):
     # send weather info and trigger info to aws
     # aws sends email/notifications
     # receive text string from aws
-    aws_text = "something from aws"
+    aws_text = "The temperature in {}, {} drops below".format(weather[0],weather[1]) + trigger_info
     if screen_on:
         speak(aws_text)
         
