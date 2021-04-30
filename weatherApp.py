@@ -3,16 +3,18 @@ from tkinter import messagebox
 from configparser import ConfigParser
 from PIL import ImageTk, Image
 import requests
+import datetime
 
 from gpiozero import DistanceSensor
 from time import sleep
 import notification
 
+
 # pin16-GPIO23, pin18-GPIO24, voltage divider required for echo
 sensor = DistanceSensor(echo=23, trigger=24, max_distance=3)
 sensor.threshold_distance = 0.5 #set trigger threshold
 
-screen_on = 0
+screen_on = 1
 
 def user_absent():
     global screen_on
@@ -58,14 +60,32 @@ def get_weather(city):
 
 def change_setting():
     global city
+    global thres_temp
     city = city_text.get()
-    if city:
+    thres_temp = Threshold.get()
+    if city and thres_temp:
         update_GUI(False)
+        print(thres_temp)
+        
+first_trigger = 1
+
+def compare_temp(weather):
+    global first_trigger
+    trigger = float('{}'.format(weather[3])) <= float(thres_temp)
+    if not trigger:
+        first_trigger = 1
+    else:
+        if first_trigger == 1:
+            first_trigger = 0
+            notification.notify(thres_temp,weather,screen_on)
+    print (trigger)
+
+    
 
 def update_GUI(first_time):
     weather = get_weather(city)
+    compare_temp(weather)
     #call function to check trigger condition
-    notification.notify('low temperature',weather,screen_on)
     if screen_on:
         display_weather(weather,first_time)
     else:
@@ -92,10 +112,13 @@ def display_weather(weather,first_time):
     app.update()
 
 def lock_screen():
+    now = datetime.datetime.now()
+    print ("Current date and time : ")
+    print (now.strftime("%Y-%m-%d %H:%M"))
     #something in here
     #display system time in super large font
     print('display lock screen')
-    location_label['text'] = ''
+    location_label['text'] = now.strftime("%Y-%m-%d %H:%M")
     imagel['image'] = ''
     temp_label['text'] = ''
     weather_label['text'] = ''
@@ -114,28 +137,29 @@ app.geometry('700x350')
 city = ''
 city_text = StringVar()
 city_entry = Entry(app, textvariable = city_text)
-city_entry.place(x = 250, y = 30)
-# ------------
+city_entry.place(x = 260, y = 30)
+# ------------\
+thres_temp = ''
 Threshold = StringVar()
-Thres_entry = Entry(app, textvariable = Threshold).place(x = 250, y = 60)
+Thres_entry = Entry(app, textvariable = Threshold).place(x = 260, y = 60)
 # ------------
-user_name = Label(app, text = "City Name").place(x = 150,y = 30) 
-user_password = Label(app, text = "Get alert when tempature is below").place(x = 35,y = 60) 
-degree = Label(app, text = "°C").place(x = 440, y = 60)
+user_name = Label(app, text = "City Name", bg="white").place(x = 150,y = 30) 
+user_password = Label(app, text = "Get alert when tempature is below", bg="white").place(x = 20,y = 60) 
+degree = Label(app, text = "°C", bg="white").place(x = 450, y = 60)
 # ------------
 search_button = Button(app, text = 'Search Weather', width = 10, command = change_setting,bg="white")
-search_button.place(x = 460, y = 30)
+search_button.place(x = 480, y = 30)
 # ------------
-alert_button = Button(app, text = 'set alert', width = 10, command = search).place(x = 460, y = 60)
+alert_button = Button(app, text = 'set alert', width = 10, command = change_setting, bg="white").place(x = 480, y = 60)
 # ------------
 location_label = Label(app, text = '', font = ('bold', 20),bg="white")
-location_label.place(x = 275, y = 130)
+location_label.place(x = 275, y = 110)
 # --------------
 img = Image.open("weather_icons/02d.png")
 #img = img.resize((150,150))
 img = ImageTk.PhotoImage(img)
 imagel = Label(app, image = '',bg="white")
-imagel.place(x = 275, y = 160)
+imagel.place(x = 275, y = 160)#x = 275, y = 160, relheight=0.4, relx=0.5, rely=0.5
 # -----------------
 temp_label = Label(app, text = '',bg="white")
 temp_label.place(x = 275, y = 250)
