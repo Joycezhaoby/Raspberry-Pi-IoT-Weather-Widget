@@ -37,9 +37,10 @@ def send_AWS(trigger_info, weather):
     now = datetime.utcnow()
     current_time = now.strftime('%Y-%m-%dT%H:%M:%SZ') #save current time
     message = {}
-    message['Trigger_info'] = trigger_info
+    message['Threshold Temp'] = trigger_info
     message['city'] = weather[0]
     message['country'] = weather[1]
+    message['temperature'] = weather[3]
     #message['sequence'] = loopCount
     messageJson = json.dumps(message)
     myAWSIoTMQTTClient.publish(payload1, messageJson, 1) #send to aws
