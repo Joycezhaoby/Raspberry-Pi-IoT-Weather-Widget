@@ -147,10 +147,9 @@ user_name = Label(app, text = "City Name", bg="white").place(x = 150,y = 30)
 user_password = Label(app, text = "Get alert when tempature is below", bg="white").place(x = 20,y = 60) 
 degree = Label(app, text = "°C", bg="white").place(x = 450, y = 60)
 # ------------
-search_button = Button(app, text = 'Search Weather', width = 10, command = change_setting,bg="white")
-search_button.place(x = 480, y = 30)
-# ------------
-alert_button = Button(app, text = 'set alert', width = 10, command = change_setting, bg="white").place(x = 480, y = 60)
+button_img = PhotoImage(file = "weather_icons/button_new.png")
+search_button = Button(app, image = button_img, width = 50, height = 50,command = change_setting,bg="white")
+search_button.place(x = 480, y = 32)
 # ------------
 location_label = Label(app, text = '', font = ('bold', 20),bg="white")
 location_label.place(x = 275, y = 110)
