@@ -2,23 +2,27 @@ from tkinter import *
 from tkinter import messagebox
 from configparser import ConfigParser
 from PIL import ImageTk, Image
-import requests
-import datetime
 from gpiozero import DistanceSensor
 from time import sleep
-
+import requests
+import datetime
 import notification
 import weatherLED
 
-
+# set up ultrasonic distance sensor
 # pin16-GPIO23, pin18-GPIO24, voltage divider required for echo
 sensor = DistanceSensor(echo=23, trigger=24, max_distance=3)
 sensor.threshold_distance = 0.5 #set trigger threshold
 
+# global variables
 screen_on = 1
+first_trigger = 1 # first time trigger occurs
+city = ''
 weather = ''
-timer_id = ''
+thres_temp = ''
+timer_id = '' # callback function id
 
+# sensor interrupt functions
 def user_absent():
     global screen_on
     screen_on = 0
@@ -31,18 +35,18 @@ def user_present():
     print("user present")
     display_weather(True)
 
-def main():
+def sensor_main():
     sensor.when_out_of_range = user_absent
     sensor.when_in_range = user_present
 
-# Set up OpenWeather API
+# set up OpenWeather API
 url = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
 config_file = 'config.ini'
 config = ConfigParser()
 config.read(config_file)
 api_key = config['api_key']['key']
 
-
+# update weather with user city input
 def get_weather():
     global weather
     result = requests.get(url.format(city, api_key))
@@ -62,6 +66,7 @@ def get_weather():
         messagebox.showerror('Error', 'Cannot find city')
         return None
 
+# change user city and trigger settings
 def change_setting():
     global city
     global thres_temp
@@ -69,9 +74,8 @@ def change_setting():
     thres_temp = Threshold.get()
     if city and thres_temp:
         update_GUI(False)
-        
-first_trigger = 1
 
+# compare temperature with threshold setting
 def compare_temp():
     global first_trigger
     trigger = float('{}'.format(weather[3])) <= float(thres_temp)
@@ -81,10 +85,8 @@ def compare_temp():
         if first_trigger == 1:
             first_trigger = 0
             notification.notify(thres_temp,weather,screen_on)
-    print (trigger)
 
-    
-
+# update GUI every minute with new weather information
 def update_GUI(first_time):
     global timer_id
     get_weather()
@@ -98,7 +100,7 @@ def update_GUI(first_time):
     if timer_id: temp_label.after_cancel(timer_id)
     timer_id = temp_label.after(60000,update_GUI,False)
 
-
+# display weather
 def display_weather(first_time):
     global img
     if weather:
@@ -114,6 +116,7 @@ def display_weather(first_time):
             notification.speak(noti_text)
     app.update()
 
+# display lock screen
 def lock_screen():
     now = datetime.datetime.now()
     print ("Current date and time : ")
@@ -136,39 +139,34 @@ app.bind("<F11>", lambda event: app.attributes("-fullscreen", not app.attributes
 app.bind("<Escape>", lambda event: app.attributes("-fullscreen", False))
 app.geometry('700x350')
 
-# ----------
-city = ''
+# user input boxes
 city_text = StringVar()
 city_entry = Entry(app, textvariable = city_text)
 city_entry.place(x = 260, y = 30)
-# ------------\
-thres_temp = ''
 Threshold = StringVar()
 Thres_entry = Entry(app, textvariable = Threshold).place(x = 260, y = 60)
-# ------------
+# user input text prompts
 user_name = Label(app, text = "City Name", bg="white").place(x = 150,y = 30) 
 user_password = Label(app, text = "Get alert when tempature is below", bg="white").place(x = 20,y = 60) 
 degree = Label(app, text = "°F", bg="white").place(x = 450, y = 60)
-# ------------
+# user setting search button
 button_img = PhotoImage(file = "weather_icons/button_new.png")
 search_button = Button(app, image = button_img, width = 50, height = 50,command = change_setting,bg="white")
 search_button.place(x = 480, y = 32)
-# ------------
+# location label
 location_label = Label(app, text = '', font = ('bold', 20),bg="white")
 location_label.place(x = 275, y = 110)
-# --------------
+# weather icon
 img = Image.open("weather_icons/02d.png")
-#img = img.resize((150,150))
 img = ImageTk.PhotoImage(img)
 imagel = Label(app, image = '',bg="white")
 imagel.place(x = 275, y = 160)#x = 275, y = 160, relheight=0.4, relx=0.5, rely=0.5
-# -----------------
+# temperature label
 temp_label = Label(app, text = '',bg="white")
 temp_label.place(x = 275, y = 250)
-# -----------------
+# weather info label
 weather_label = Label(app, text = '',bg="white")
 weather_label.place(x = 313, y = 280)
 
-main()
-#screen_on = True
-app.mainloop()
+sensor_main() # activate sensor interrupt functions
+app.mainloop() # start GUI
