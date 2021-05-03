@@ -70,10 +70,14 @@ def get_weather():
 def change_setting():
     global city
     global thres_temp
+    global first_trigger
     city = city_text.get()
     thres_temp = Threshold.get()
+    first_trigger = 1
     if city and thres_temp:
         update_GUI(False)
+    else:
+        messagebox.showerror('Error', 'Please fill in your setting')
 
 # compare temperature with threshold setting
 def compare_temp():
@@ -107,10 +111,14 @@ def display_weather(first_time):
         location_label['text'] = '{}, {}'.format(weather[0], weather[1])
         imgpath = "weather_icons/{}.png".format(weather[4])
         img = Image.open(imgpath)
+        img = img.resize((round(app.winfo_height()*0.3),
+                          round(app.winfo_height()*0.3)))
         img = ImageTk.PhotoImage(img)
         imagel['image'] = img
+        imagel['text'] = ''
         temp_label['text'] = '{:.2f}°C, {:.2f}°F'.format(weather[2], weather[3])
         weather_label['text'] = weather[5]
+        place_setting()
         if first_time:
             noti_text = 'The weather in {}, {} is {}'.format(weather[0], weather[1],weather[5])
             notification.speak(noti_text)
@@ -123,12 +131,27 @@ def lock_screen():
     print (now.strftime("%Y-%m-%d %H:%M"))
     #something in here
     #display system time in super large font
-    print('display lock screen')
-    location_label['text'] = now.strftime("%Y-%m-%d %H:%M")
+    location_label['text'] = now.strftime("%Y-%m-%d")
+    imagel['text'] = now.strftime("%H:%M")
     imagel['image'] = ''
     temp_label['text'] = ''
     weather_label['text'] = ''
+    city_entry.place_forget()
+    Thres_entry.place_forget()
+    user_name.place_forget()
+    user_password.place_forget()
+    degree.place_forget()
+    search_button.place_forget()
     app.update()
+
+# place user input labels
+def place_setting():
+    city_entry.place(x = 50, relx = 0.5, rely = 0.09, anchor = CENTER)
+    Thres_entry.place(x = 50, relx = 0.5, rely = 0.17, anchor = CENTER)
+    user_name.place(anchor = NE, x = -50, relx = 0.5,rely = 0.05, relheight = 0.08) 
+    user_password.place(anchor = NE, x = -50, relx = 0.5,rely = 0.13, relheight = 0.08) 
+    degree.place(x = 140, relx = 0.5, rely = 0.13, relheight = 0.08)
+    search_button.place(x = 200, anchor = CENTER, relx = 0.5, rely = 0.13)
 
 # Create object and set up default screen size
 app = Tk()
@@ -137,36 +160,36 @@ app.config(bg="white")
 app.attributes("-fullscreen", True)
 app.bind("<F11>", lambda event: app.attributes("-fullscreen", not app.attributes("-fullscreen")))
 app.bind("<Escape>", lambda event: app.attributes("-fullscreen", False))
-app.geometry('700x350')
+app.geometry('700x400')
+
 
 # user input boxes
 city_text = StringVar()
 city_entry = Entry(app, textvariable = city_text)
-city_entry.place(x = 260, y = 30)
 Threshold = StringVar()
-Thres_entry = Entry(app, textvariable = Threshold).place(x = 260, y = 60)
+Thres_entry = Entry(app, textvariable = Threshold)
 # user input text prompts
-user_name = Label(app, text = "City Name", bg="white").place(x = 150,y = 30) 
-user_password = Label(app, text = "Get alert when tempature is below", bg="white").place(x = 20,y = 60) 
-degree = Label(app, text = "°F", bg="white").place(x = 450, y = 60)
+user_name = Label(app, text = "City Name", bg="white")
+user_password = Label(app, text = "Get alert when tempature is below", bg="white")
+degree = Label(app, text = "°F", bg="white")
 # user setting search button
 button_img = PhotoImage(file = "weather_icons/button_new.png")
 search_button = Button(app, image = button_img, width = 50, height = 50,command = change_setting,bg="white")
-search_button.place(x = 480, y = 32)
 # location label
-location_label = Label(app, text = '', font = ('bold', 20),bg="white")
-location_label.place(x = 275, y = 110)
+location_label = Label(app, text = '', font = ('', 28,'bold'),bg="white")
+location_label.place(relx = 0, rely = 0.25, relheight = 0.15,relwidth = 1)
 # weather icon
+imagel = Label(app, image = '', text='', font=('',40,'bold'),bg="white")
+imagel.place(relx = 0, rely=0.4, relheight = 0.3, relwidth = 1)#x = 275, y = 160, relheight=0.4, relx=0.5, rely=0.5
 img = Image.open("weather_icons/02d.png")
 img = ImageTk.PhotoImage(img)
-imagel = Label(app, image = '',bg="white")
-imagel.place(x = 275, y = 160)#x = 275, y = 160, relheight=0.4, relx=0.5, rely=0.5
 # temperature label
-temp_label = Label(app, text = '',bg="white")
-temp_label.place(x = 275, y = 250)
+temp_label = Label(app, text = '',font = ('', 28),bg="white")
+temp_label.place(relx = 0, rely = 0.7, relheight = 0.15,relwidth = 1)
 # weather info label
-weather_label = Label(app, text = '',bg="white")
-weather_label.place(x = 313, y = 280)
+weather_label = Label(app, text = '',font = ('',20), bg="white")
+weather_label.place(relx = 0, rely = 0.85, relheight = 0.1,relwidth = 1)
 
+place_setting()
 sensor_main() # activate sensor interrupt functions
 app.mainloop() # start GUI
