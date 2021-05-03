@@ -31,8 +31,7 @@ myAWSIoTMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
 myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 myAWSIoTMQTTClient.connect()
  
-# Publish to the same topic in a loop forever
-#loopCount = 0
+# Publish to the same topic
 def send_AWS(trigger_info, weather):
     now = datetime.utcnow()
     current_time = now.strftime('%Y-%m-%dT%H:%M:%SZ') #save current time
@@ -41,11 +40,7 @@ def send_AWS(trigger_info, weather):
     message['city'] = weather[0]
     message['country'] = weather[1]
     message['temperature'] = weather[3]
-    #message['sequence'] = loopCount
     messageJson = json.dumps(message)
     myAWSIoTMQTTClient.publish(payload1, messageJson, 1) #send to aws
     print('Published topic %s: %s\n' % (payload1, messageJson))
-    #loopCount += 1
-    #time.sleep(10) #wait 10 seconds to poll info again to not spam the email
     #myAWSIoTMQTTClient.disconnect()
-#myAWSIoTMQTTClient.disconnect()
