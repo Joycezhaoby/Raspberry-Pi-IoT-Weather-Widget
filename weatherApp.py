@@ -4,10 +4,11 @@ from configparser import ConfigParser
 from PIL import ImageTk, Image
 import requests
 import datetime
-
 from gpiozero import DistanceSensor
 from time import sleep
+
 import notification
+import weatherLED
 
 
 # pin16-GPIO23, pin18-GPIO24, voltage divider required for echo
@@ -15,20 +16,20 @@ sensor = DistanceSensor(echo=23, trigger=24, max_distance=3)
 sensor.threshold_distance = 0.5 #set trigger threshold
 
 screen_on = 1
+weather = ''
+timer_id = ''
 
 def user_absent():
     global screen_on
-    print("user absent")
     screen_on = 0
-    update_GUI(False)
-    #lock screen commands
+    print("user absent")
+    lock_screen()
 
 def user_present():
     global screen_on
-    print("user present")
     screen_on = 1
-    update_GUI(True)
-    #active screen
+    print("user present")
+    display_weather(True)
 
 def main():
     sensor.when_out_of_range = user_absent
@@ -42,20 +43,23 @@ config.read(config_file)
 api_key = config['api_key']['key']
 
 
-def get_weather(city):
+def get_weather():
+    global weather
     result = requests.get(url.format(city, api_key))
     if result:
         json = result.json()
-        city = json['name']
+        cityname = json['name']
         country = json['sys']['country']
         temp_kelvin = json['main']['temp']
         temp_cel = temp_kelvin - 273.15
         temp_fahr = (temp_kelvin - 273.15) * 9 / 5 + 32
         icon = json['weather'][0]['icon']
-        weather = json['weather'][0]['main']
-        final = (city, country, temp_cel, temp_fahr, icon, weather)
-        return final
+        weather_main = json['weather'][0]['main']
+        weather_id = json['weather'][0]['id']
+        weather = (cityname, country, temp_cel, temp_fahr, icon, weather_main, weather_id)
+        return weather
     else:
+        messagebox.showerror('Error', 'Cannot find city')
         return None
 
 def change_setting():
@@ -65,11 +69,10 @@ def change_setting():
     thres_temp = Threshold.get()
     if city and thres_temp:
         update_GUI(False)
-        print(thres_temp)
         
 first_trigger = 1
 
-def compare_temp(weather):
+def compare_temp():
     global first_trigger
     trigger = float('{}'.format(weather[3])) <= float(thres_temp)
     if not trigger:
@@ -83,17 +86,20 @@ def compare_temp(weather):
     
 
 def update_GUI(first_time):
-    weather = get_weather(city)
-    compare_temp(weather)
-    #call function to check trigger condition
+    global timer_id
+    get_weather()
+    compare_temp()
+    weatherLED.weather_color(weather[6])
+    print(weather[6])
     if screen_on:
-        display_weather(weather,first_time)
+        display_weather(first_time)
     else:
         lock_screen()
-    temp_label.after(60000,update_GUI,False)
+    if timer_id: temp_label.after_cancel(timer_id)
+    timer_id = temp_label.after(60000,update_GUI,False)
 
 
-def display_weather(weather,first_time):
+def display_weather(first_time):
     global img
     if weather:
         location_label['text'] = '{}, {}'.format(weather[0], weather[1])
@@ -106,9 +112,6 @@ def display_weather(weather,first_time):
         if first_time:
             noti_text = 'The weather in {}, {} is {}'.format(weather[0], weather[1],weather[5])
             notification.speak(noti_text)
-    else:
-        messagebox.showerror('Error', 'Cannot find city')
-        change_setting()
     app.update()
 
 def lock_screen():
@@ -145,7 +148,7 @@ Thres_entry = Entry(app, textvariable = Threshold).place(x = 260, y = 60)
 # ------------
 user_name = Label(app, text = "City Name", bg="white").place(x = 150,y = 30) 
 user_password = Label(app, text = "Get alert when tempature is below", bg="white").place(x = 20,y = 60) 
-degree = Label(app, text = "°C", bg="white").place(x = 450, y = 60)
+degree = Label(app, text = "°F", bg="white").place(x = 450, y = 60)
 # ------------
 button_img = PhotoImage(file = "weather_icons/button_new.png")
 search_button = Button(app, image = button_img, width = 50, height = 50,command = change_setting,bg="white")
