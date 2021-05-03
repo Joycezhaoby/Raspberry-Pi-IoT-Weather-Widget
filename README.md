@@ -1,11 +1,11 @@
-# Project Name here
+# Raspberry Pi IoT Weather Widget
 ###### 4180 Final Project - Luca DeCicco, Jinghong Peng, Bingyue Zhao
 
 ## Overview
 Lorem ipsum dolor sit amet, sit unum reque an, mea nonumy deserunt perpetua an, elitr everti oblique in vim. Sed ei harum eloquentiam. Nostro persecuti interpretaris vix te, eum habeo partem eu. Case nostrud qualisque ad eos, vel brute possim evertitur ut.Lorem ipsum dolor sit amet, sit unum reque an, mea nonumy deserunt perpetua an, elitr everti oblique in vim. Sed ei harum eloquentiam. Nostro persecuti interpretaris vix te, eum habeo partem eu. Case nostrud qualisque ad eos, vel brute possim evertitur ut.
 #### Demo Video
 <p align="center">
-<img src="docs/flowchart1.png" width="75%" height="75%"/>
+<img src="docs and code development/flowchart2_1.png" width="75%" height="75%"/>
 </p>
 
 ## Hardware
