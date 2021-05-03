@@ -22,7 +22,6 @@ timer_id = ''
 def user_absent():
     global screen_on
     screen_on = 0
-    update_GUI(False)
     print("user absent")
     lock_screen()
 
