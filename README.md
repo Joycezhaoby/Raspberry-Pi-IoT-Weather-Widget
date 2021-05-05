@@ -24,6 +24,7 @@ written in python
 description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
 ### Weather API
 The application retrieve real-time weather information from openweather.com https://openweathermap.org/api
+
 API key is stored in config.ini file
 ### GUI Display
 description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
