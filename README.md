@@ -47,15 +47,15 @@ The weather information is updated every minute when a user is nearby.
 ## Setup and Installation
 Initial Pi setup
 
-####Installation:
+#### Installation:
 
-#####Step1: Install Python3 and pip on your computer
+##### Step1: Install Python3 and pip on your computer
   
   Python3: https://www.python.org/downloads/
   
   pip: https://pip.pypa.io/en/stable/installing/
  
-#####Step2: Install packages in the terminal
+##### Step2: Install packages in the terminal
 
   tkinter: *pip install tk*
   
