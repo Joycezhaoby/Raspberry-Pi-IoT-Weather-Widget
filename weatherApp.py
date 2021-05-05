@@ -118,10 +118,10 @@ def display_weather(first_time):
         imagel['text'] = ''
         temp_label['text'] = '{:.2f}°C, {:.2f}°F'.format(weather[2], weather[3])
         weather_label['text'] = weather[5]
-        place_setting()
-        if first_time:
-            noti_text = 'The weather in {}, {} is {}'.format(weather[0], weather[1],weather[5])
-            notification.speak(noti_text)
+    place_setting()
+    if weather and first_time:
+        noti_text = 'The weather in {}, {} is {}'.format(weather[0], weather[1],weather[5])
+        notification.speak(noti_text)
     app.update()
 
 # display lock screen
