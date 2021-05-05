@@ -55,7 +55,7 @@ written in python
 ### AWS
 description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
 ### Weather API
-- The application retrieve real-time weather information from openweather.com https://openweathermap.org/api
+- The application retrieve real-time weather information from [OpenWeather](https://openweathermap.org/api)
 
 - API key is stored in config.ini file
 
@@ -66,11 +66,15 @@ GUI display is developed with Python tkinter package
 
 - When user is not nearby, the screen will only show current time and date.
 
-<img src="https://github.com/Joycezhaoby/Raspberry-Pi-IoT-Weather-Widget/blob/Master/docs%20and%20code%20development/lock.png" width="500" height="500">
+<p align="left">
+<img src="docs and code development/lock.png" width="50%" height="50%"/>
+</p>
 
 #### **Weather GUI**:
 
-<img src="https://github.com/Joycezhaoby/Raspberry-Pi-IoT-Weather-Widget/blob/Master/docs%20and%20code%20development/input.png" width="500" height="500">
+<p align="left">
+<img src="docs and code development/input.png" width="50%" height="50%"/>
+</p>
 
 - When user is nearby, the screen will display weather GUI.
 
@@ -80,7 +84,9 @@ GUI display is developed with Python tkinter package
 
 - The weather information is updated every minute when a user is nearby.
 
-<img src="https://github.com/Joycezhaoby/Raspberry-Pi-IoT-Weather-Widget/blob/Master/docs%20and%20code%20development/weather.png" width="500" height="500">
+<p align="left">
+<img src="docs and code development/weather.png" width="50%" height="50%"/>
+</p>
 
 ## Setup and Installation
 Initial Pi setup
