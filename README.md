@@ -26,12 +26,14 @@ Hardware and parts used in the project:
   * LED - RGB clear common cathode
   * Dropping resistors: 3x 330Ω
 
-Detailed info about each hardware
+_\*HDMI connection is optional if a virtual desktop is set up for pi_
 
+Detailed info about each hardware
 Pinout and connection
 
-### Ultrasonic Sensor
-### Speaker
+### Distance Sensor
+### Audio Output
+### LED Display
 
 ## Software Development
 written in python
