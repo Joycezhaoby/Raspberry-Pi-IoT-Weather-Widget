@@ -31,11 +31,18 @@ API key is stored in config.ini file
 GUI display is developed with Python tkinter package
 
 Lock screen:
+
 When user is not nearby, the screen will only show current time and date.
 
 Weather GUI:
+
 When user is nearby, the screen will display weather GUI.
-User can search weather information by entering city name and select a threshold temperature below which user will receive email alert.
+
+User can search weather information by entering city name and select a threshold temperature below which user will receive email alert. User have to input both city name and threshold temperature, or there will be an error. After entering information in the input box, user can search by clicking the green search button.
+
+Information displayed on the GUI includes: City name and its Country, weather, weather icon, temperature in both Celcius and Fahrenheit.
+
+The weather information is updated every minute when a user is nearby.
 
 ## Setup and Installation
 Initial Pi setup
