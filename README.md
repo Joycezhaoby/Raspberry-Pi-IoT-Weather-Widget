@@ -1,13 +1,12 @@
 # Raspberry Pi IoT Weather Widget
-###### 4180 Final Project - Luca DeCicco, Jinghong Peng, Bingyue Zhao
+###### ECE 4180 Final Project - by Luca DeCicco, Jinghong Peng, Bingyue Zhao
 
 ## Overview
-Lorem ipsum dolor sit amet, sit unum reque an, mea nonumy deserunt perpetua an, elitr everti oblique in vim. Sed ei harum eloquentiam. Nostro persecuti interpretaris vix te, eum habeo partem eu. Case nostrud qualisque ad eos, vel brute possim evertitur ut.Lorem ipsum dolor sit amet, sit unum reque an, mea nonumy deserunt perpetua an, elitr everti oblique in vim. Sed ei harum eloquentiam. Nostro persecuti interpretaris vix te, eum habeo partem eu. Case nostrud qualisque ad eos, vel brute possim evertitur ut.
-#### Demo Video
-<p align="center">
-<img src="docs and code development/flowchart2_1.png" width="75%" height="75%"/>
-</p>
+This project aims to develop an IoT weather widget on Raspberry Pi 4 and set up a GUI for users to interact with. The weather information will be extracted from the internet and update every minute. Users can change the city and the temperature threshold setting through the GUI, and once the temperature drops below that threshold, Pi will send out an email notification through AWS to inform the users. A sonar sensor detects whether a user is standing in front of the display or not. If a user is present, the screen will be on and show weather information; if a user is absent, the display will show a lock screen with the current time. Weather information will also be announced through a PCB-mount speaker when the display wakes up everytime or when the trigger event occurs while the display is on. The RGB LED will light up with specific colors depending on the weather status.
 
+<p align="center">
+<img src="docs and code development/flowchart2_1.png" width="50%" height="50%"/>
+</p>
 
 #### [Demo Video](https://youtu.be/iJoPHu5lioU)
 #### [Presentation](https://youtu.be/49yFB9mnRGA)
@@ -33,6 +32,21 @@ Detailed info about each hardware
 Pinout and connection
 
 ### Distance Sensor
+| Sonar Sensor  |  |
+| ------------- | ------------- |
+| Vcc  | 5V  |
+| Trig  | GPIO 24  |
+| Echo | GPIO 23\* |
+| Gnd | Gnd |
+
+_**\*The GPIO pins on pi are only 3.3V tolerant so a voltage divider is required to drop the voltage from 5V to 3.3V. Refer to the picture below.**_
+
+<p align="left">
+<img src="docs and code development/sonar_connection.png" width="50%" height="50%"/>
+</p>
+
+
+
 ### Audio Output
 ### LED Display
 
@@ -81,15 +95,17 @@ Initial Pi setup
  
 ### Step2: Install packages in the terminal
 
-- tkinter: *pip install tk*
+
+  tkinter: `pip install tk`
   
-- configparser: *pip install configparser*
+  configparser: `pip install configparser`
   
-- PIL: *pip install pillow*
+  PIL: `pip install pillow`
   
-- gpiozero: *sudo apt install python3-gpiozero*
+  gpiozero: `sudo apt install python3-gpiozero`
   
-- time: *pip install times*
+  time: `pip install times`
+
 
 ## TroubleShooting
 possible troubles when setting up the project and how to fix them
