@@ -23,6 +23,7 @@ written in python
 ### AWS
 description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
 ### Weather API
+https://openweathermap.org/api
 ### GUI Display
 description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
 
