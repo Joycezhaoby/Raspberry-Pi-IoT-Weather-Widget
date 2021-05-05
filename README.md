@@ -43,7 +43,7 @@ _**\*The GPIO pins on Pi are only 3.3V tolerant so a voltage divider is required
 
 Using the GPIO Zero library makes it easy to control GPIO devices on Pi with Python, and HC-SR04 can be represented by the DistanceSensor class: 
 ```
-gpiozero.DistanceSensor(echo, trigger, max_distance=1, threshold_distance=0.3)
+class gpiozero.DistanceSensor(echo, trigger, max_distance=1, threshold_distance=0.3)
 ```
 The parameter `threshold_distance` sets the distance in meter which will trigger the `in_range` and `out_of_range` events when crossed. Functions can be attachted to the events to run when the device changes states between active and inactive.
 
@@ -57,6 +57,11 @@ The parameter `threshold_distance` sets the distance in meter which will trigger
 | OUT+ | **Speaker** + |
 | OUT- | **Speaker** - |
 
+<p align="left">
+<img src="docs and code development/speaker_connection.png" width="50%" height="50%"/>
+</p>
+
+#### GPIO Setup
 Raspberry Pi has two PWM channels and each channel has two output pins:
 * PWM0: GPIO 12 and GPIO 18
 * PWM1: GPIO 13 and GPIO 19
@@ -78,8 +83,39 @@ The Pi has three audio output modes: HDMI 1 and 2, and a headphone jack which us
      - Write to the file and quit
      - Reboot Pi for the changes to take effect
 
+Now that the audio GPIO output is set up. The GPIO pins' current functions can be checked via `gpio readall` and all possible functions can be looked up on the [datasheet](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2711/rpi_DATA_2711_1p0_preliminary.pdf). With the audio amp and speaker wired up, now all system sounds can be played through the speaker. 
+
+#### Volumn Adjustment
+There are several ways to adjust the output volumn through the speaker if it is too soft/loud.
+1. Adjust the system sound output level from the GUI or `alsamixer` in the terminal.
+2. Add resistors to the audio amp to adjust the gain.
+     - In this project, the audio output is not loud enough so gain resistors are added to the amplifier. There are two identical resistors, indicated in the white rectangles on the amplifier board, that set the gain of the board. Two additional resistors can be added in parallel to reduce the resistor value. 100 kΩ resistors are added (shown below) to boost the gain from 2 to 3. For more detailed information and restrictions, please consult the datasheet and this [guide](https://www.sparkfun.com/tutorials/392).
+
+<p align="left">
+<img src="docs and code development/audio amp.png" width="20%" height="20%"/>
+</p>
 
 ### LED Display
+| RGB LED  |   |
+| ------ | ------ |
+| R | GPIO 17  | 
+| Gnd (longest) | Gnd |
+| G | GPIO 27 |
+| B | GPIO 22 |
+
+Please note that **dropping resistors** need to be connected in ***series*** to limit the voltage drop across the LEDs.
+
+<p align="left">
+<img src="docs and code development/led_connection.png" width="50%" height="50%"/>
+</p>
+
+The RGBLED class in GPIO Zero library is used to set up the weather LED patterns. Functions `blink` and `pulse` make the device turn on and off or fade in and out repeatedly.
+```
+classgpiozero.RGBLED(red, green, blue)
+blink(on_time=1, off_time=1, fade_in_time=0, fade_out_time=0, on_color=(1, 1, 1), off_color=(0, 0, 0), n=None, background=True)
+pulse(fade_in_time=1, fade_out_time=1, on_color=(1, 1, 1), off_color=(0, 0, 0), n=None, background=True)
+```
+The parameter `background` is set to `True` (the default) to start a background thread to continue blinking/pulsing and return immediately so that the program will not halt. 
 
 ## Software Development
 written in python
