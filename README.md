@@ -49,13 +49,13 @@ Initial Pi setup
 
 ### Installation:
 
-#### Step1: Install Python3 and pip on your computer
+### Step1: Install Python3 and pip on your computer
   
   Python3: https://www.python.org/downloads/
   
   pip: https://pip.pypa.io/en/stable/installing/
  
-#### Step2: Install packages in the terminal
+### Step2: Install packages in the terminal
 
   tkinter: *pip install tk*
   
