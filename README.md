@@ -115,65 +115,75 @@ classgpiozero.RGBLED(red, green, blue)
 blink(on_time=1, off_time=1, fade_in_time=0, fade_out_time=0, on_color=(1, 1, 1), off_color=(0, 0, 0), n=None, background=True)
 pulse(fade_in_time=1, fade_out_time=1, on_color=(1, 1, 1), off_color=(0, 0, 0), n=None, background=True)
 ```
-The parameter `background` is set to `True` (the default) to start a background thread to continue blinking/pulsing and return immediately so that the program will not halt. 
+The parameter `background` is set to `True` (the default) to start a background thread to continue blinking/pulsing and return immediately so that the program will not halt. 9 LED lighting patterns are designed and assigned to distinct weathers, and the [demo program](LEDdemo.py) shows all the effects at once. 
 
 ## Software Development
-written in python
+The application is written in Python.
+
 ### AWS
 description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
 ### Weather API
-- The application retrieve real-time weather information from [OpenWeather](https://openweathermap.org/api)
+The application retrieves real-time weather information from [OpenWeather](https://openweathermap.org/api) which provides a free weather API for the public. Create an account and subscribe the _Current Weather Data_ API.
 
-- API key is stored in config.ini file
+Obtained API key is stored in config.ini file.
 
 ### GUI Display
-GUI display is developed with Python tkinter package
+GUI display is developed with Python tkinter package.
 
-#### **Lock screen**:
+#### Lock screen:
 
-- When user is not nearby, the screen will only show current time and date.
+- When a user is not nearby, the sonar is inactive and the `out_of_range` event is set. The screen will only show current time and date.
 
 <p align="left">
 <img src="docs and code development/lock.png" width="50%" height="50%"/>
 </p>
 
-#### **Weather GUI**:
+#### Weather Display:
 
 <p align="left">
 <img src="docs and code development/input.png" width="50%" height="50%"/>
 </p>
 
-- When user is nearby, the screen will display weather GUI.
+- When a user is nearby, the sonar is active and the `in_range` event is set. The screen will display weather.
 
-- User can search weather information by entering city name and select a threshold temperature below which user will receive email alert. User have to input both city name and threshold temperature, or there will be an error. After entering information in the input box, user can search by clicking the green search button.
+- Users can search weather information by entering city name and select a threshold temperature below which user will receive an email alert. Users will have to input both city name and threshold temperature, or there will be an error message. Users will also receive an error message if the city name is invalid. After entering information in the input box, user can search by clicking the green search button.
 
-- Information displayed on the GUI includes: City name and its Country, weather, weather icon, temperature in both Celcius and Fahrenheit.
+- Information displayed on the GUI includes: City name and Country, weather, weather icon, temperature in both Celcius and Fahrenheit.
 
-- The weather information is updated every minute when a user is nearby.
+- The weather information is updated every minute in the background by using tkinter `after()` callback function. When the `update_GUI()` function is called, new weather information is fetched from OpenWeather, and is compared to the trigger value. The LED and GUI display is updated along with weather information, and the previous callback handle will be canceled to prevent accidental accumulations of the callback function. 
 
 <p align="left">
 <img src="docs and code development/weather.png" width="50%" height="50%"/>
 </p>
 
+### Text-to-Speech
+A TTS engine is needed to announce the weather through the speaker. **eSpeak** provides offline text-to-speech conversions with easy access. Developed code is included in [notification.py](notification.py).
+
 ## Setup and Installation
-Initial Pi setup
 
 ### Installation:
 
-### Step1: Install Python3 and pip on your computer
+### Step 1: Install Python3 and pip on your computer
   
 - Python3: https://www.python.org/downloads/
   
 - pip: https://pip.pypa.io/en/stable/installing/
  
-### Step2: Install packages in the terminal
+### Step 2: Install packages in the terminal
 
-
-  tkinter: `pip install tk`
+  tkinter: `pip3 install tk`
   
-  configparser: `pip install configparser`
+  configparser: `pip3 install configparser`
   
-  PIL: `pip install pillow`
+  PIL: `pip3 install pillow`
+  
+  time: `pip3 install times`
+  
+  requests: `pip3 install requests`
+  
+  datetime: `pip3 install DateTime`
+  
+  num2words: `pip3 install num2words`
   
   gpiozero: GPIO Zero is installed by default in the Raspberry Pi OS desktop image. If in case reinstallation is needed, run the following commands.
   ```
@@ -181,13 +191,29 @@ Initial Pi setup
   sudo apt install python3-gpiozero
   ```
   
-  time: `pip install times`
+  eSpeak:
+  ```
+  sudo apt-get update
+  sudo apt-get install espeak
+  ```
 
 
-## TroubleShooting
-possible troubles when setting up the project and how to fix them
-## Reflection
-what to improve. Thought on future work
+### Step 3: Set Up AWS
+
+
+
+## Possible Future Improvements
+
+* Provide more options for trigger settings (e.g. specific weather conditions, high temperature threshold, etc.)
+* Include a secondary display device
+* Select alternative audio output devices
+
 ## Resources
+
+[Raspberry Pi 4B Datasheet](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2711/rpi_DATA_2711_1p0_preliminary.pdf)
+
 [GPIO Zero Library](https://gpiozero.readthedocs.io/)
 
+[Open Weather Map API](https://openweathermap.org/api)
+
+[Mono Audio Amp Guide](https://www.sparkfun.com/tutorials/392)
