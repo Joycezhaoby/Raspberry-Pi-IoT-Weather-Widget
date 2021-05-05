@@ -52,7 +52,7 @@ GUI display is developed with Python tkinter package
 
 - When user is not nearby, the screen will only show current time and date.
 
-![lock screen](https://github.com/Joycezhaoby/Raspberry-Pi-IoT-Weather-Widget/docs and code development/lock.png?raw=true)
+![lock screen](https://github.com/Joycezhaoby/Raspberry-Pi-IoT-Weather-Widget/blob/Master/docs%20and%20code%20development/lock.png?raw=true)
 
 #### **Weather GUI**:
 
