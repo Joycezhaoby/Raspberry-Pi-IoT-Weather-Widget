@@ -32,6 +32,19 @@ Detailed info about each hardware
 Pinout and connection
 
 ### Distance Sensor
+| Sonar Sensor  |  |
+| ------------- | ------------- |
+| Vcc  | 5V  |
+| Trig  | GPIO 24  |
+| Echo | GPIO 23\* |
+| Gnd | Gnd |
+
+_**\*The GPIO pins on pi are only 3.3V tolerant so a voltage divider is required to drop the voltage from 5V to 3.3V. Refer to the picture below.**_
+
+<p align="center">
+<img src="docs and code development/sonar_connection.png" width="50%" height="50%"/>
+</p>
+
 ### Audio Output
 ### LED Display
 
