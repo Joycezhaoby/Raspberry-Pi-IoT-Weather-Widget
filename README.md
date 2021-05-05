@@ -66,6 +66,8 @@ GUI display is developed with Python tkinter package
 
 - The weather information is updated every minute when a user is nearby.
 
+<img src="https://github.com/Joycezhaoby/Raspberry-Pi-IoT-Weather-Widget/blob/Master/docs%20and%20code%20development/weather.png" width="500" height="500">
+
 ## Setup and Installation
 Initial Pi setup
 
