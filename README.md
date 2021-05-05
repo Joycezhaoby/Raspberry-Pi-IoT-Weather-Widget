@@ -33,6 +33,9 @@ GUI display is developed with Python tkinter package
 Lock screen:
 When user is not nearby, the screen will only show current time and date.
 
+Weather GUI:
+When user is nearby, the screen will display weather GUI.
+User can search weather information by entering city name and select a threshold temperature below which user will receive email alert.
 
 ## Setup and Installation
 Initial Pi setup
