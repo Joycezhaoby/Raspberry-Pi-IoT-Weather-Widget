@@ -121,7 +121,10 @@ The parameter `background` is set to `True` (the default) to start a background 
 The application is written in Python.
 
 ### AWS
+
 description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
+##################################################################################################
+
 ### Weather API
 The application retrieves real-time weather information from [OpenWeather](https://openweathermap.org/api) which provides a free weather API for the public. Create an account and subscribe the _Current Weather Data_ API.
 
@@ -200,7 +203,7 @@ A TTS engine is needed to announce the weather through the speaker. **eSpeak** p
 
 ### Step 3: Set Up AWS
 
-
+#####################################################################################
 
 ## Possible Future Improvements
 
