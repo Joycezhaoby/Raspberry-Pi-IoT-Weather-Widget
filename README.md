@@ -8,15 +8,33 @@ Lorem ipsum dolor sit amet, sit unum reque an, mea nonumy deserunt perpetua an, 
 <img src="docs and code development/flowchart2_1.png" width="75%" height="75%"/>
 </p>
 
+
+#### [Demo Video](https://youtu.be/iJoPHu5lioU)
+#### [Presentation](https://youtu.be/49yFB9mnRGA)
+
 ## Hardware
-list hardware used in the project here
+Hardware and parts used in the project:
+* Raspberry Pi 4 Model B:
+  * Micro HDMI cable and monitor\*  
+* Distance sensor:
+  * Ultrasonic distance sensor HC-SR04
+  * Voltage divider resistors: 330 Ω and 510 Ω
+* Audio output:
+  * Mono audio amp breakout TPA2005D1
+  * PCB-mount speaker 8ohm 0.1W
+  * Gain resistors：2x 100 kΩ
+* LED display:
+  * LED - RGB clear common cathode
+  * Dropping resistors: 3x 330Ω
+
+_\*HDMI connection is optional if a virtual desktop is set up for pi_
 
 Detailed info about each hardware
-
 Pinout and connection
 
-### Ultrasonic Sensor
-### Speaker
+### Distance Sensor
+### Audio Output
+### LED Display
 
 ## Software Development
 written in python
