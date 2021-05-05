@@ -47,7 +47,12 @@ The weather information is updated every minute when a user is nearby.
 ## Setup and Installation
 Initial Pi setup
 
-terminal command for installing modules/packages
+Installation:
+
+Step1: Install Python3 and pip on your computer
+  
+  Python3: (https://www.python.org/downloads/)
+  pip: (https://pip.pypa.io/en/stable/installing/)
 
 ## TroubleShooting
 possible troubles when setting up the project and how to fix them
