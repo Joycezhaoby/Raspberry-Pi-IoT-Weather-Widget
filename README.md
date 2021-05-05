@@ -20,7 +20,11 @@ Hardware and parts used in the project:
   * Voltage divider resistors: 330 Ω and 510 Ω
 * Audio output:
   * Mono audio amp breakout TPA2005D1
-  * PCB-mount speaker 8ohm .1W
+  * PCB-mount speaker 8ohm 0.1W
+  * Gain resistors：2x 100 kΩ
+* LED display:
+  * LED - RGB clear common cathode
+  * Dropping resistors: 3x 330Ω
 
 Detailed info about each hardware
 
