@@ -3,6 +3,7 @@
 
 ## Overview
 This project aims to develop an IoT weather widget on Raspberry Pi 4 and set up a GUI for users to interact with. The weather information will be extracted from the internet and update every minute. Users can change the city and the temperature threshold setting through the GUI, and once the temperature drops below that threshold, Pi will send out an email notification through AWS to inform the users. A sonar sensor detects whether a user is standing in front of the display or not. If a user is present, the screen will be on and show weather information; if a user is absent, the display will show a lock screen with the current time. Weather information will also be announced through a PCB-mount speaker when the display wakes up everytime or when the trigger event occurs while the display is on. The RGB LED will light up with specific colors depending on the weather status.
+
 <p align="center">
 <img src="docs and code development/flowchart2_1.png" width="50%" height="50%"/>
 </p>
@@ -34,10 +35,17 @@ _\*HDMI connection is optional if a virtual desktop is set up for pi_
 | Echo | GPIO 23\* |
 | Gnd | Gnd |
 
-_**\*The GPIO pins on pi are only 3.3V tolerant so a voltage divider is required to drop the voltage from 5V to 3.3V. Refer to the picture below.**_
+_**\*The GPIO pins on pi are only 3.3V tolerant so a voltage divider is required to drop the voltage from 5V to 3.3V.**_ Connect the 330 Ω resistor to Echo and the 510 Ω resistor in series from 330 Ω to gnd. Then connect the junction to pin 16 (GPIO 23). Refer to the picture below.
+
 <p align="left">
 <img src="docs and code development/sonar_connection.png" width="50%" height="50%"/>
 </p>
+
+Using the GPIO Zero library makes it easy to control GPIO devices on pi with Python, and HC-SR04 can be represented by the DistanceSensor class: 
+```
+gpiozero.DistanceSensor(echo, trigger, *, queue_len=30, max_distance=1, threshold_distance=0.3, partial=False, pin_factory=None)
+```
+The parameter `threshold_distance` sets the distance in meter which will trigger the `in_range` and `out_of_range` events when crossed. Functions can be attachted to the events to run when the device changes states between active and inactive.
 
 
 
@@ -102,7 +110,11 @@ Initial Pi setup
   
   PIL: `pip install pillow`
   
-  gpiozero: `sudo apt install python3-gpiozero`
+  gpiozero: GPIO Zero is installed by default in the Raspberry Pi OS desktop image. If in case reinstallation is needed, run the following commands.
+  ```
+  sudo apt update
+  sudo apt install python3-gpiozero
+  ```
   
   time: `pip install times`
 
