@@ -3,7 +3,6 @@
 
 ## Overview
 This project aims to develop an IoT weather widget on Raspberry Pi 4 and set up a GUI for users to interact with. The weather information will be extracted from the internet and update every minute. Users can change the city and the temperature threshold setting through the GUI, and once the temperature drops below that threshold, Pi will send out an email notification through AWS to inform the users. A sonar sensor detects whether a user is standing in front of the display or not. If a user is present, the screen will be on and show weather information; if a user is absent, the display will show a lock screen with the current time. Weather information will also be announced through a PCB-mount speaker when the display wakes up everytime or when the trigger event occurs while the display is on. The RGB LED will light up with specific colors depending on the weather status.
-
 <p align="center">
 <img src="docs and code development/flowchart2_1.png" width="50%" height="50%"/>
 </p>
@@ -13,24 +12,20 @@ This project aims to develop an IoT weather widget on Raspberry Pi 4 and set up 
 
 ## Hardware
 Hardware and parts used in the project:
-* Raspberry Pi 4 Model B:
+* **Raspberry Pi 4 Model B:**
   * Micro HDMI cable and monitor\*  
-* Distance sensor:
+* **Distance sensor:**
   * Ultrasonic distance sensor HC-SR04
   * Voltage divider resistors: 330 Ω and 510 Ω
-* Audio output:
+* **Audio output:**
   * Mono audio amp breakout TPA2005D1
   * PCB-mount speaker 8ohm 0.1W
   * Gain resistors：2x 100 kΩ
-* LED display:
+* **LED display:**
   * LED - RGB clear common cathode
   * Dropping resistors: 3x 330Ω
 
 _\*HDMI connection is optional if a virtual desktop is set up for pi_
-
-Detailed info about each hardware
-Pinout and connection
-
 ### Distance Sensor
 | Sonar Sensor  |  |
 | ------------- | ------------- |
@@ -40,7 +35,6 @@ Pinout and connection
 | Gnd | Gnd |
 
 _**\*The GPIO pins on pi are only 3.3V tolerant so a voltage divider is required to drop the voltage from 5V to 3.3V. Refer to the picture below.**_
-
 <p align="left">
 <img src="docs and code development/sonar_connection.png" width="50%" height="50%"/>
 </p>
