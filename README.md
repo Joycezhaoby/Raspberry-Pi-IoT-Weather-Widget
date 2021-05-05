@@ -36,13 +36,13 @@ When user is not nearby, the screen will only show current time and date.
 
 #### **Weather GUI**:
 
-When user is nearby, the screen will display weather GUI.
+- When user is nearby, the screen will display weather GUI.
 
-User can search weather information by entering city name and select a threshold temperature below which user will receive email alert. User have to input both city name and threshold temperature, or there will be an error. After entering information in the input box, user can search by clicking the green search button.
+- User can search weather information by entering city name and select a threshold temperature below which user will receive email alert. User have to input both city name and threshold temperature, or there will be an error. After entering information in the input box, user can search by clicking the green search button.
 
-Information displayed on the GUI includes: City name and its Country, weather, weather icon, temperature in both Celcius and Fahrenheit.
+- Information displayed on the GUI includes: City name and its Country, weather, weather icon, temperature in both Celcius and Fahrenheit.
 
-The weather information is updated every minute when a user is nearby.
+- The weather information is updated every minute when a user is nearby.
 
 ## Setup and Installation
 Initial Pi setup
@@ -51,21 +51,21 @@ Initial Pi setup
 
 ### Step1: Install Python3 and pip on your computer
   
-  Python3: https://www.python.org/downloads/
+- Python3: https://www.python.org/downloads/
   
-  pip: https://pip.pypa.io/en/stable/installing/
+- pip: https://pip.pypa.io/en/stable/installing/
  
 ### Step2: Install packages in the terminal
 
-  tkinter: *pip install tk*
+- tkinter: *pip install tk*
   
-  configparser: *pip install configparser*
+- configparser: *pip install configparser*
   
-  PIL: *pip install pillow*
+- PIL: *pip install pillow*
   
-  gpiozero: *sudo apt install python3-gpiozero*
+- gpiozero: *sudo apt install python3-gpiozero*
   
-  time: *pip install times*
+- time: *pip install times*
 
 ## TroubleShooting
 possible troubles when setting up the project and how to fix them
