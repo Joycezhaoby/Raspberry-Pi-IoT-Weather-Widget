@@ -51,8 +51,17 @@ Installation:
 
 Step1: Install Python3 and pip on your computer
   
-  Python3: (https://www.python.org/downloads/)
-  pip: (https://pip.pypa.io/en/stable/installing/)
+  Python3: https://www.python.org/downloads/
+  
+  pip: https://pip.pypa.io/en/stable/installing/
+ 
+Step2: Install packages in the terminal
+
+  tkinter: *pip install tk*
+  configparser: *pip install configparser*
+  PIL: *pip install pillow*
+  gpiozero: *sudo apt install python3-gpiozero*
+  time: *pip install times*
 
 ## TroubleShooting
 possible troubles when setting up the project and how to fix them
