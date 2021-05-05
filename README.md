@@ -23,16 +23,16 @@ written in python
 ### AWS
 description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
 ### Weather API
-The application retrieve real-time weather information from openweather.com https://openweathermap.org/api
+- The application retrieve real-time weather information from openweather.com https://openweathermap.org/api
 
-API key is stored in config.ini file
+- API key is stored in config.ini file
 
 ### GUI Display
 GUI display is developed with Python tkinter package
 
 #### **Lock screen**:
 
-When user is not nearby, the screen will only show current time and date.
+- When user is not nearby, the screen will only show current time and date.
 
 #### **Weather GUI**:
 
