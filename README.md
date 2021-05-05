@@ -56,6 +56,8 @@ GUI display is developed with Python tkinter package
 
 #### **Weather GUI**:
 
+<img src="https://github.com/Joycezhaoby/Raspberry-Pi-IoT-Weather-Widget/blob/Master/docs%20and%20code%20development/input.png" width="500" height="500">
+
 - When user is nearby, the screen will display weather GUI.
 
 - User can search weather information by entering city name and select a threshold temperature below which user will receive email alert. User have to input both city name and threshold temperature, or there will be an error. After entering information in the input box, user can search by clicking the green search button.
