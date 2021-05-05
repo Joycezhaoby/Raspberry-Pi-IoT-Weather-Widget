@@ -35,15 +35,15 @@ _\*HDMI connection is optional if a virtual desktop is set up for pi_
 | Echo | GPIO 23\* |
 | Gnd | Gnd |
 
-_**\*The GPIO pins on pi are only 3.3V tolerant so a voltage divider is required to drop the voltage from 5V to 3.3V.**_ Connect the 330 Ω resistor to Echo and the 510 Ω resistor in series from 330 Ω to gnd. Then connect the junction to pin 16 (GPIO 23). Refer to the picture below.
+_**\*The GPIO pins on Pi are only 3.3V tolerant so a voltage divider is required to drop the voltage from 5V to 3.3V.**_ Connect the 330 Ω resistor to Echo and the 510 Ω resistor in series from 330 Ω to gnd. Then connect the junction to pin 16 (GPIO 23). Refer to the picture below.
 
 <p align="left">
 <img src="docs and code development/sonar_connection.png" width="50%" height="50%"/>
 </p>
 
-Using the GPIO Zero library makes it easy to control GPIO devices on pi with Python, and HC-SR04 can be represented by the DistanceSensor class: 
+Using the GPIO Zero library makes it easy to control GPIO devices on Pi with Python, and HC-SR04 can be represented by the DistanceSensor class: 
 ```
-gpiozero.DistanceSensor(echo, trigger, *, queue_len=30, max_distance=1, threshold_distance=0.3, partial=False, pin_factory=None)
+gpiozero.DistanceSensor(echo, trigger, max_distance=1, threshold_distance=0.3)
 ```
 The parameter `threshold_distance` sets the distance in meter which will trigger the `in_range` and `out_of_range` events when crossed. Functions can be attachted to the events to run when the device changes states between active and inactive.
 
@@ -56,6 +56,27 @@ The parameter `threshold_distance` sets the distance in meter which will trigger
 | IN- | Gnd |
 | OUT+ | **Speaker** + |
 | OUT- | **Speaker** - |
+
+Raspberry Pi has two PWM channels and each channel has two output pins:
+* PWM0: GPIO 12 and GPIO 18
+* PWM1: GPIO 13 and GPIO 19
+
+The Pi has three audio output modes: HDMI 1 and 2, and a headphone jack which uses PWM. The Pi needs to be configured to reroute the audio output to GPIO PWM pins.
+1. Select headphone jack as the output option
+     - Open the terminal and type in command `sudo raspi-config`
+     - Select **System Options** > **Audio**, then select **Headphones**. Please note that the order and arrangment might be different for different models.
+2. Use Device Tree Overlay to assign audio outputs
+     - Open and edit config.txt file
+       - `cd /boot`
+       - `sudo nano config.txt`
+     - under the `# Enable audio` section, add the following code
+       ```
+       dtparam=audio=on
+       audio_pwm_mode=2
+       dtoverlay=audremap,pins_12_13
+       ```
+     - Write to the file and quit
+     - Reboot Pi for the changes to take effect
 
 
 ### LED Display
@@ -132,4 +153,5 @@ possible troubles when setting up the project and how to fix them
 ## Reflection
 what to improve. Thought on future work
 ## Resources
-reference on external resources
+[GPIO Zero Library](https://gpiozero.readthedocs.io/)
+
