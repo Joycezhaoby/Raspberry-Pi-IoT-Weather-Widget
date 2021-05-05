@@ -9,12 +9,18 @@ This project aims to develop an IoT weather widget on Raspberry Pi 4 and set up 
 <img src="docs and code development/flowchart2_1.png" width="50%" height="50%"/>
 </p>
 
-
 #### [Demo Video](https://youtu.be/iJoPHu5lioU)
 #### [Presentation](https://youtu.be/49yFB9mnRGA)
-
 ## Hardware
-list hardware used in the project here
+Hardware and parts used in the project:
+* Raspberry Pi 4 Model B:
+  * Micro HDMI cable and monitor\*  
+* Distance sensor:
+  * Ultrasonic distance sensor HC-SR04
+  * Voltage divider resistors: 330 Ω and 510 Ω
+* Audio output:
+  * Mono audio amp breakout TPA2005D1
+  * PCB-mount speaker 8ohm .1W
 
 Detailed info about each hardware
 
