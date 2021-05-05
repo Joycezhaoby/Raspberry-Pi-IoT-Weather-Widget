@@ -58,9 +58,13 @@ Step1: Install Python3 and pip on your computer
 Step2: Install packages in the terminal
 
   tkinter: *pip install tk*
+  
   configparser: *pip install configparser*
+  
   PIL: *pip install pillow*
+  
   gpiozero: *sudo apt install python3-gpiozero*
+  
   time: *pip install times*
 
 ## TroubleShooting
