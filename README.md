@@ -29,7 +29,7 @@ Hardware and parts used in the project:
 _\*HDMI connection is optional if a virtual desktop is set up for pi_
 ### Distance Sensor
 | Sonar Sensor  |  |
-| ------------- | ------------- |
+| -------- | -------- |
 | Vcc  | 5V  |
 | Trig  | GPIO 24  |
 | Echo | GPIO 23\* |
@@ -47,9 +47,17 @@ gpiozero.DistanceSensor(echo, trigger, *, queue_len=30, max_distance=1, threshol
 ```
 The parameter `threshold_distance` sets the distance in meter which will trigger the `in_range` and `out_of_range` events when crossed. Functions can be attachted to the events to run when the device changes states between active and inactive.
 
-
-
 ### Audio Output
+| Audio Amp  |   |
+| ------ | ------ |
+| PWR+ | 5V  | 
+| PWR- | Gnd |
+| IN+ | GPIO 12 |
+| IN- | Gnd |
+| OUT+ | **Speaker** + |
+| OUT- | **Speaker** - |
+
+
 ### LED Display
 
 ## Software Development
