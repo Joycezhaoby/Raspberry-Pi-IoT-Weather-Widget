@@ -122,8 +122,7 @@ The application is written in Python.
 
 ### AWS
 
-description of the setup and functionality of AWS. Reference to the Corresponding py file. brief descriptions for SDK/packages/modules used. Feel free to break into smaller sections
-##################################################################################################
+AWS is used to send an email notification to the user is a certain threshold has been met. It uses the AWSIotMQTT Client to send messages to an AWS account that is configured to send those messages to a given endpoint (which in this case is an email address)
 
 ### Weather API
 The application retrieves real-time weather information from [OpenWeather](https://openweathermap.org/api) which provides a free weather API for the public. Create an account and subscribe the _Current Weather Data_ API.
@@ -203,7 +202,14 @@ A TTS engine is needed to announce the weather through the speaker. **eSpeak** p
 
 ### Step 3: Set Up AWS
 
-#####################################################################################
+1) Navigate to [AWS](https://aws.amazon.com) and create an account
+2) [Create an IoT Thing](https://docs.aws.amazon.com/iot/latest/developerguide/iot-moisture-create-thing.html) and its relevant certificate files. Download these files to the Raspberry Pi
+3) Create an IoT [Rule](https://docs.aws.amazon.com/iot/latest/developerguide/iot-moisture-create-rule.html) that sends messages recieved from the Raspberry Pi as an SNS push notification
+4) Create the [SNS Topic and Subscription](https://docs.aws.amazon.com/iot/latest/developerguide/iot-moisture-create-sns-topic.html) that will send these SNS pushes to a given email address
+5) AWS should now be configures correctly. On the Rapsberry Pi side, follow [these instructions](https://docs.aws.amazon.com/iot/latest/developerguide/connecting-to-existing-device.html) to download the necessary packages that are required to connect the Pi to AWS
+6) Configure the AWS connection with the medthod used in the file awsconnect.py
+ - the "payload1" variable defines the topic the Pi will publish to. This topic will also be the same one selected in step 3 to send as an SNS push
+ - "certPath" defines the folder in which you placed the certificate files in step 2. These files will be used to connect to the AWS server
 
 ## Possible Future Improvements
 
