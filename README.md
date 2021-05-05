@@ -41,9 +41,11 @@ Pinout and connection
 
 _**\*The GPIO pins on pi are only 3.3V tolerant so a voltage divider is required to drop the voltage from 5V to 3.3V. Refer to the picture below.**_
 
-<p align="center">
+<p align="left">
 <img src="docs and code development/sonar_connection.png" width="50%" height="50%"/>
 </p>
+
+
 
 ### Audio Output
 ### LED Display
@@ -87,15 +89,15 @@ Initial Pi setup
  
 ### Step2: Install packages in the terminal
 
-  tkinter: *pip install tk*
+  tkinter: `pip install tk`
   
-  configparser: *pip install configparser*
+  configparser: `pip install configparser`
   
-  PIL: *pip install pillow*
+  PIL: `pip install pillow`
   
-  gpiozero: *sudo apt install python3-gpiozero*
+  gpiozero: `sudo apt install python3-gpiozero`
   
-  time: *pip install times*
+  time: `pip install times`
 
 ## TroubleShooting
 possible troubles when setting up the project and how to fix them
